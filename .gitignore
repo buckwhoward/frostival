@@ -1,0 +1,10 @@
+.DS_Store
+# working files and internal pages (not for the public site)
+.work/
+README.md
+brand.html
+logos.html
+index-classic.html
+emails/
+assets/logo/legacy/
+assets/brand/img/
