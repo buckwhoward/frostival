@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=DM+Sans:opsz,wght@9..40,400..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=7">
+<link rel="stylesheet" href="assets/css/site.css?v=8">
 <link rel="preload" as="image" href="assets/video/hero-poster.jpg?v=3">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Event","name":"Frostival 2026","startDate":"2026-11-28","endDate":"2026-12-27","eventStatus":"https://schema.org/EventScheduled","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
@@ -87,22 +87,24 @@
         <p class="lede">We open Thanksgiving weekend, take a quick breather, then go every single night from Dec 10 right up to the 27th.</p>
       </div>
       <div class="dates-grid">
-        <div class="dates-summary reveal">
-          <div class="big-count"><b>24</b><span>nights of Frostival<br>this season</span></div>
-          <div class="date-pill"><div><b>Nov 28 – 29</b><small>Sat &amp; Sun · Opening weekend</small></div><span class="tag">Open</span></div>
-          <div class="date-pill closed"><div><b>Nov 30 – Dec 2</b><small>Mon – Wed</small></div><span class="tag">Closed</span></div>
-          <div class="date-pill"><div><b>Dec 3 – 6</b><small>Thu – Sun</small></div><span class="tag">Open</span></div>
-          <div class="date-pill closed"><div><b>Dec 7 – 9</b><small>Mon – Wed</small></div><span class="tag">Closed</span></div>
-          <div class="date-pill"><div><b>Dec 10 – 27</b><small>Every night, 18 nights straight</small></div><span class="tag">Open daily</span></div>
-        </div>
         <div class="month reveal" id="cal-nov"></div>
         <div class="month reveal" id="cal-dec"></div>
-      </div>
-      <div class="legend reveal">
-        <span><i style="background:var(--gold)"></i>Opening night</span>
-        <span><i style="background:var(--red)"></i>Open</span>
-        <span><i style="background:var(--red-deep)"></i>Open (weekend)</span>
-        <span><i style="background:repeating-linear-gradient(-45deg,#F3E8D6 0 3px,#fff 3px 6px);outline:1px solid #E5D8C2"></i>Closed</span>
+        <aside class="dates-side reveal" aria-label="Season summary">
+          <div class="big-count"><b>24</b><span>nights of Frostival this season</span></div>
+          <ul class="ranges">
+            <li><i class="dot open" aria-hidden="true"></i><div><b>Nov 28 – 29</b><span>Sat – Sun · Opening weekend</span></div></li>
+            <li class="off"><i class="dot shut" aria-hidden="true"></i><div><b>Nov 30 – Dec 2</b><span>Closed</span></div></li>
+            <li><i class="dot open" aria-hidden="true"></i><div><b>Dec 3 – 6</b><span>Thu – Sun</span></div></li>
+            <li class="off"><i class="dot shut" aria-hidden="true"></i><div><b>Dec 7 – 9</b><span>Closed</span></div></li>
+            <li><i class="dot open" aria-hidden="true"></i><div><b>Dec 10 – 27</b><span>Every night, 18 in a row</span></div></li>
+          </ul>
+        </aside>
+        <div class="legend reveal">
+          <span><i style="background:var(--gold)"></i>Opening night</span>
+          <span><i style="background:var(--red)"></i>Open</span>
+          <span><i style="background:var(--red-deep)"></i>Weekend (Fri – Sun)</span>
+          <span><i class="hatch"></i>Closed</span>
+        </div>
       </div>
     </div>
   </section>
@@ -405,6 +407,6 @@
 
 <div class="mobile-cta" id="mcta"><a class="btn" href="#join" data-join data-src="mobile-bar">Join the list · Nov 28 – Dec 27</a></div>
 
-<script src="assets/js/site.js?v=7" defer></script>
+<script src="assets/js/site.js?v=8" defer></script>
 </body>
 </html>

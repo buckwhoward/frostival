@@ -22,7 +22,7 @@
       const inSeason = dt >= first && dt <= last;
       const open = isOpen(dt);
       if (open) openCount++;
-      const wk = dt.getDay() === 0 || dt.getDay() === 6;
+      const wk = [0, 5, 6].includes(dt.getDay()); // Fri, Sat, Sun are weekend nights
       const cls = open ? `open${wk ? ' wknd' : ''}${+dt === +first ? ' first' : ''}` : inSeason ? 'closed' : '';
       const label = `${name} ${n}${open ? ', open' : inSeason ? ', closed' : ''}`;
       cells += `<div class="d ${cls}" aria-label="${label}">${n}</div>`;
