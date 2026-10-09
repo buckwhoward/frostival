@@ -173,8 +173,9 @@ section{position:relative}
 .tickets{background:
   radial-gradient(60% 50% at 85% 10%, rgba(255,201,74,.18), transparent 60%),
   radial-gradient(50% 40% at 10% 90%, rgba(226,51,43,.12), transparent 60%), var(--cream)}
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
-@media (max-width:960px){.price-grid{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch}
+@media (max-width:1180px){.price-grid{grid-template-columns:repeat(2,1fr);max-width:880px;margin-inline:auto}}
+@media (max-width:640px){.price-grid{grid-template-columns:1fr;max-width:520px}}
 .price{position:relative;border-radius:26px;padding:30px 28px 32px;background:var(--red-deep);color:#fff;display:flex;flex-direction:column;box-shadow:0 30px 60px -35px rgba(106,32,23,.8);overflow:hidden}
 .price::before{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%)}
 .price .who{font-weight:700;font-size:.95rem;opacity:.85}
@@ -191,7 +192,10 @@ section{position:relative}
 .price.vip li svg{color:var(--wine)}
 .price.vip li.hl{color:var(--wine)}
 .price.vip ul{border-color:rgba(106,32,23,.25)}
-.price.vip .ribbon{position:absolute;top:22px;right:22px;background:var(--wine);color:var(--gold);font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.45em .8em;border-radius:999px}
+.price .ribbon{align-self:flex-start;height:24px;line-height:24px;margin:0 0 10px;background:var(--gold);color:var(--wine);font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:0 .8em;border-radius:999px}
+@media (min-width:641px){.price:not(:has(> .ribbon)) .who{margin-top:34px}}
+.price.family{background:var(--night)}
+.price.vip .ribbon{background:var(--wine);color:var(--gold)}
 .ticket-foot{margin-top:30px;display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:center;color:#5B5247;font-weight:600;font-size:.95rem}
 .ticket-foot span{display:inline-flex;gap:8px;align-items:center}
 .ticket-foot svg{width:18px;height:18px;color:var(--red)}
