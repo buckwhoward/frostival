@@ -147,3 +147,18 @@
     } finally { btn.disabled = false; btn.textContent = 'Join the list'; }
   });
 })();
+
+// ---- Snowball & Flurry trailer: load YouTube only after a click ----
+(() => {
+  const btn = document.querySelector('.show-play');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.yt;
+    const f = document.createElement('iframe');
+    f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
+    f.title = 'Snowball & Flurry trailer';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    btn.replaceWith(f);
+  });
+})();

@@ -285,3 +285,22 @@ footer{padding:80px 0 40px;border-top:1px solid rgba(255,255,255,.08);margin-top
 .join-sms-legal{margin:2px 0 0;font-size:.72rem;line-height:1.45;color:#7F8EA5}
 .join-sms-legal a{color:var(--muted)}
 .join-fine a{color:var(--muted)}
+
+/* Snowball & Flurry show */
+.show-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+@media (max-width:900px){.show-grid{grid-template-columns:1fr}}
+.show-video{position:relative;border-radius:var(--radius);overflow:hidden;background:#000;aspect-ratio:16/9}
+.show-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.show-play{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;cursor:pointer;background:none;display:block}
+.show-play img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.show-play::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,22,38,.05),rgba(11,22,38,.55))}
+.show-play:hover img{transform:scale(1.03)}
+.show-play-btn{position:absolute;z-index:1;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;box-shadow:0 14px 40px -10px rgba(226,51,43,.8);transition:transform .2s}
+.show-play:hover .show-play-btn{transform:scale(1.08)}
+.show-play-btn svg{width:36px;height:36px;margin-left:4px}
+.show-play-label{position:absolute;z-index:1;left:22px;bottom:18px;font-family:var(--display);font-weight:800;font-size:1.4rem;color:#fff;font-variation-settings:"wdth" 80}
+.show-side{display:grid;gap:16px;grid-template-rows:1fr 1fr}
+@media (max-width:900px){.show-side{grid-template-columns:1fr 1fr;grid-template-rows:auto}}
+.show-ph{margin:0;border-radius:var(--radius);overflow:hidden;background:var(--night-2);min-height:160px}
+.show-ph img{width:100%;height:100%;object-fit:cover}
+.show-note{margin:14px 0 0;font-size:.85rem;color:#6F7F96}
