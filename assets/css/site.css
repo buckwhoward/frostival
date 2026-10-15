@@ -112,15 +112,20 @@ section{position:relative}
 .big-count{display:flex;align-items:center;gap:14px;padding:18px 22px;border-radius:var(--radius);background:var(--night);color:var(--cream)}
 .big-count b{font-family:var(--display);font-size:3.6rem;line-height:.8;color:var(--gold);font-weight:800}
 .big-count span{font-weight:600;line-height:1.25;max-width:12ch}
-.ranges{list-style:none;margin:0;padding:6px 20px;border-radius:var(--radius);background:#fff;flex:1;display:flex;flex-direction:column;justify-content:space-around;box-shadow:0 1px 0 var(--cream-2), 0 20px 40px -30px rgba(80,40,0,.35)}
-.ranges li{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--cream-2)}
-.ranges li:last-child{border-bottom:0}
-.ranges b{display:block;font-family:var(--display);font-weight:800;font-size:1.15rem;letter-spacing:-.01em;line-height:1.1}
-.ranges span{font-size:.85rem;font-weight:600;color:#7A6F62}
-.ranges li.off b{color:#A99C89;font-weight:700}
-.ranges li.off span{color:#B5A994}
-.dot{flex:none;width:12px;height:12px;border-radius:4px}
-.dot.open{background:var(--red)}
+.night-card{border-radius:var(--radius);background:#fff;flex:1;padding:22px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 var(--cream-2), 0 20px 40px -30px rgba(80,40,0,.35)}
+.nc-eyebrow{font-weight:700;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.night-card h3{font-size:1.7rem;line-height:1.05;margin:0}
+.nc-tag{align-self:flex-start;font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.4em .8em;border-radius:999px;background:var(--red);color:#fff}
+.nc-tag.gold{background:var(--gold);color:var(--ink)}
+.nc-tag.shut{background:#F3E8D6;color:#8A7F72}
+.nc-hours{margin:4px 0 0;display:grid;gap:0}
+.nc-hours div{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--cream-2)}
+.nc-hours div:last-child{border-bottom:0}
+.nc-hours dt{color:#7A6F62;font-weight:600;font-size:.9rem}
+.nc-hours dd{margin:0;font-weight:800;color:var(--ink);text-align:right}
+.nc-note{margin:0;font-size:.88rem;color:#5B5247;line-height:1.5}
+.nc-btn{margin-top:auto;justify-content:center}
+.nc-btn.ghost{--bg:transparent;--fg:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
 .dot.shut,.legend .hatch{background:repeating-linear-gradient(-45deg,#EADBC3 0 3px,#fff 3px 6px);outline:1px solid #E5D8C2}
 .month{background:#fff;border-radius:var(--radius);padding:22px;box-shadow:0 1px 0 var(--cream-2), 0 20px 40px -30px rgba(80,40,0,.35)}
 .month h3{font-size:1.6rem;margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline}
@@ -129,10 +134,15 @@ section{position:relative}
 .cal .dow{font-size:.72rem;font-weight:800;letter-spacing:.08em;color:#9A8E7F;padding-bottom:4px}
 .cal .d{aspect-ratio:1;display:grid;place-items:center;border-radius:10px;font-weight:700;font-size:.95rem;color:#C2B7A6;position:relative}
 .cal .d.open{background:var(--red);color:#fff}
-.cal .d.open.wknd{background:var(--red-deep)}
+.cal button.d{border:0;font:inherit;font-weight:700;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.cal button.d:hover{transform:translateY(-1px)}
+.cal .d.sel{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--ink);z-index:1}
+.cal .d.open:not(.first){background:var(--red)}
 .cal .d.open.first{background:var(--gold);color:var(--ink)}
 .cal .d.closed{background:repeating-linear-gradient(-45deg,#F3E8D6 0 4px,#fff 4px 8px);color:#B5A994;text-decoration:line-through}
 .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;font-size:.85rem;font-weight:600;color:#5B5247}
+.legend-tip{color:#9A8E7F;font-weight:600;margin-left:auto}
+@media (max-width:640px){.legend-tip{margin-left:0;width:100%}}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
 
 /* Santa feature */
@@ -181,6 +191,7 @@ section{position:relative}
 .price .who{font-weight:700;font-size:.95rem;opacity:.85}
 .price h3{font-size:1.9rem;margin-top:4px}
 .price .amt{font-family:var(--display);font-weight:800;font-size:4rem;line-height:1;letter-spacing:-.04em;margin:22px 0 4px;display:flex;align-items:flex-start;gap:2px}
+.price .amt .from{font-family:var(--body);font-size:.26em;font-weight:700;letter-spacing:.02em;text-transform:uppercase;align-self:flex-end;margin:0 8px .55em 0;opacity:.85}
 .price .amt sup{font-size:.45em;margin-top:.25em}
 .price .note{font-size:.88rem;opacity:.8;margin-bottom:22px}
 .price ul{list-style:none;padding:20px 0 0;margin:0 0 26px;border-top:1px solid rgba(255,255,255,.22);display:grid;gap:11px;flex:1}

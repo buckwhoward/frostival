@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=DM+Sans:opsz,wght@9..40,400..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/site.css?v=10">
+<link rel="stylesheet" href="../assets/css/site.css?v=11">
 <style>
   .c-head{padding:clamp(120px,14vw,170px) 0 44px;background:radial-gradient(70% 90% at 15% 0%,rgba(91,200,245,.12),transparent 60%),var(--night)}
   .c-head h1{font-size:clamp(2.8rem,7vw,5rem);margin-top:12px}
@@ -271,14 +271,14 @@
       <div class="sec-head" style="text-align:center;justify-items:center"><span class="eyebrow">FAQ</span><h2>Good questions.</h2></div>
       <div class="faq">
         <details id="faq-dates"><summary>When is Frostival open?</summary><div class="a">24 nights: Nov 28 &amp; 29, Dec 3 to 6, then every night from Dec 10 through Dec 27, 2026. Entry starts at 5:30 PM and you pick an entry time when you book. VIPs can arrive any time 5:30 to 8:30. <a href="../#dates">See the calendar</a>.</div></details>
-        <details id="faq-tickets"><summary>How much are tickets?</summary><div class="a">Kids 4 to 11 are $16 on weeknights and $18 Friday through Sunday. Ages 12 and up are $21 and $26. The Family Pass (2 adults + 2 kids) is $60 and $70. VIP tickets, which include entry, are $35 for kids and $45 for adults any night. Kids 3 and under are free. <a href="../#tickets">See tickets</a>.</div></details>
+        <details id="faq-tickets"><summary>How much are tickets?</summary><div class="a">Prices change by night and go up as nights fill, so the earlier you book, the better the price. Kids 4 to 11 start at $16, ages 12 and up start at $21, the Family Pass (2 adults + 2 kids) starts at $60, and VIP tickets, which include entry, start at $35 for kids and $45 for adults. Kids 3 and under are free. <a href="../#tickets">See tickets</a>.</div></details>
         <details id="faq-parking"><summary>Where do I park?</summary><div class="a">Parking is on-site at Howell Family Farms, 4016 W Division St, Arlington, TX 76012, for $10 per vehicle, cash or card. <a href="https://maps.google.com/?q=4016+W+Division+St,+Arlington,+TX+76012" target="_blank" rel="noopener">Get directions</a>.</div></details>
         <details><summary>Where is Frostival?</summary><div class="a">Frostival is at Howell Family Farms, 4016 W Division St, Arlington, TX 76012. Parking is on-site for $10 per vehicle, cash or card.</div></details>
         <details><summary>Is visiting Santa really free?</summary><div class="a">Yep. Every guest with a Frostival ticket can visit Santa at no extra cost. VIP guests get to skip the line.</div></details>
         <details><summary>What's included with a regular ticket?</summary><div class="a">The trail of lights, the Snowball &amp; Flurry show, a visit with Santa, Santa's reindeer, holiday character meet-and-greets and the 200-foot holiday slide.</div></details>
         <details><summary>What is the Snowball &amp; Flurry show?</summary><div class="a">A 4D special-effects night show starring two snowmen, Snowball and Flurry, on our castle stage, with animation, original music and effects like snow, bubbles, fog, sky beams and fire. It's included with every ticket. <a href="../#show">Watch the trailer</a>.</div></details>
         <details><summary>Do little ones need a ticket?</summary><div class="a">Kids 3 and under get in free. Kids 4–11 need a child ticket, and guests 12 and up need an adult ticket.</div></details>
-        <details><summary>Is there a family deal?</summary><div class="a">Yes. The Family Pass covers 2 adults and 2 kids for $60 on weeknights or $70 Friday through Sunday, up to $18 less than buying four tickets.</div></details>
+        <details><summary>Is there a family deal?</summary><div class="a">Yes. The Family Pass covers 2 adults and 2 kids in one ticket, starting at $60, and costs less than buying four tickets separately.</div></details>
         <details><summary>What do I get with VIP?</summary><div class="a">VIP is a full entry ticket ($35 for kids, $45 for adults) with the extras built in: skip-the-line Santa visits, flexible entry any time from 5:30 to 8:30, free hot chocolate, a free Holiday Haunt ticket, a free VR ticket and 15% off at the Frostival store. That's a $60 value.</div></details>
         <details><summary>I can't find my tickets. Help?</summary><div class="a">Search your inbox and spam folder for "Frostival" first. Still missing? <a href="?topic=order" data-topic="order">Send us a message</a> with the name and email you used to buy them and we'll sort it out.</div></details>
         <details><summary>Can I get a refund or exchange?</summary><div class="a">Tickets are non-refundable. You can exchange them for another date up to 48 hours before your visit for $5 per ticket. We can't exchange within 48 hours of the event.</div></details>
@@ -338,7 +338,7 @@
     { id: 'weather', label: 'Weather or closures', icon: 'cloud', req: ['visit_date'], show: [], opt: ['order_number'],
       tip: 'If we close a night for inclement weather, you\'ll be able to reschedule to another date. Include your order number so we can find you fast.' },
     { id: 'vip', label: 'VIP, Santa & what\'s included', icon: 'star', req: [], show: [], opt: ['order_number'],
-      tip: 'Santa visits are free with every ticket. VIP tickets ($35 kids, $45 adults) include entry plus skip-the-line Santa, hot chocolate, a Holiday Haunt ticket, a VR ticket and 15% off at the store. <a href="../#tickets">See tickets</a>.' },
+      tip: 'Santa visits are free with every ticket. VIP tickets (from $35 kids, $45 adults) include entry plus skip-the-line Santa, hot chocolate, a Holiday Haunt ticket, a VR ticket and 15% off at the store. <a href="../#tickets">See tickets</a>.' },
     { id: 'access', label: 'Accessibility', icon: 'access', req: [], show: [], opt: ['visit_date'], msgLabel: 'What do you need help with?' },
     { id: 'groups', label: 'Groups, schools & private events', icon: 'group', req: ['group_size'], show: ['organization'], opt: ['visit_date'], orgLabel: 'Group, school or company',
       msgLabel: 'Tell us about your group', msgPlaceholder: 'Dates you\'re considering, ages, and anything special you\'re planning.' },

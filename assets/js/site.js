@@ -2,12 +2,17 @@
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---- Season calendar (single source of truth for open nights) ----
+  // ---- Season calendar (single source of truth for open nights + hours) ----
   const SEASON = { year: 2026, open: [['11-28', '11-29'], ['12-03', '12-06'], ['12-10', '12-27']] };
+  // Default hours for every open night; override a single night in HOURS_BY_DATE (e.g. '12-24': { last: '7:30 PM' })
+  const HOURS = { entry: '5:30 PM', last: '8:30 PM', vip: '5:30 – 8:30 PM' };
+  const HOURS_BY_DATE = {};
   const d = (md) => new Date(`${SEASON.year}-${md}T12:00:00`);
   const ranges = SEASON.open.map(([a, b]) => [d(a), d(b)]);
   const first = ranges[0][0], last = ranges.at(-1)[1];
   const isOpen = (dt) => ranges.some(([a, b]) => dt >= a && dt <= b);
+  const md = (dt) => String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
+  const long = (dt) => dt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
   function renderMonth(el, month) {
     if (!el) return;
@@ -22,15 +27,47 @@
       const inSeason = dt >= first && dt <= last;
       const open = isOpen(dt);
       if (open) openCount++;
-      const wk = [0, 5, 6].includes(dt.getDay()); // Fri, Sat, Sun are weekend nights
-      const cls = open ? `open${wk ? ' wknd' : ''}${+dt === +first ? ' first' : ''}` : inSeason ? 'closed' : '';
-      const label = `${name} ${n}${open ? ', open' : inSeason ? ', closed' : ''}`;
-      cells += `<div class="d ${cls}" aria-label="${label}">${n}</div>`;
+      const cls = open ? `open${+dt === +first ? ' first' : ''}` : inSeason ? 'closed' : '';
+      if (inSeason) cells += `<button type="button" class="d ${cls}" data-md="${md(dt)}" aria-label="${long(dt)}, ${open ? 'open' : 'closed'}" aria-pressed="false">${n}</button>`;
+      else cells += `<div class="d" aria-hidden="true">${n}</div>`;
     }
-    el.innerHTML = `<h3>${name} <small>${openCount} nights open</small></h3><div class="cal" role="grid" aria-label="${name} ${SEASON.year}">${cells}</div>`;
+    el.innerHTML = `<h3>${name} <small>${openCount} nights open</small></h3><div class="cal" role="group" aria-label="${name} ${SEASON.year}">${cells}</div>`;
   }
   renderMonth(document.getElementById('cal-nov'), 10);
   renderMonth(document.getElementById('cal-dec'), 11);
+
+  // ---- Night details: click a day to see hours ----
+  const card = document.getElementById('nightCard');
+  function nextOpen(dt) { const x = new Date(dt); for (let i = 0; i < 40; i++) { x.setDate(x.getDate() + 1); if (isOpen(x)) return new Date(x); } return null; }
+  function showNight(mdKey, focus) {
+    if (!card) return;
+    const dt = d(mdKey), open = isOpen(dt);
+    document.querySelectorAll('.cal .d[data-md]').forEach(b => { const on = b.dataset.md === mdKey; b.classList.toggle('sel', on); b.setAttribute('aria-pressed', on); });
+    const h = Object.assign({}, HOURS, HOURS_BY_DATE[mdKey] || {});
+    const tag = +dt === +first ? '<span class="nc-tag gold">Opening night</span>' : +dt === +last ? '<span class="nc-tag">Final night</span>' : open ? '<span class="nc-tag">Open</span>' : '<span class="nc-tag shut">Closed</span>';
+    if (open) {
+      card.innerHTML = `<span class="nc-eyebrow">Your night</span><h3>${long(dt)}</h3>${tag}
+        <dl class="nc-hours"><div><dt>First entry</dt><dd>${h.entry}</dd></div><div><dt>Last entry</dt><dd>${h.last}</dd></div><div><dt>VIP arrival</dt><dd>Any time ${h.vip}</dd></div></dl>
+        <p class="nc-note">Pick your entry time when you book. Prices go up as nights fill, so earlier is better.</p>
+        <a class="btn nc-btn nc-join" href="#join">Join the list</a>`;
+      const j = card.querySelector('.nc-join'); j && j.addEventListener('click', e => { e.preventDefault(); document.querySelector('.nav-cta[data-join]')?.click(); });
+    } else {
+      const nx = nextOpen(dt);
+      card.innerHTML = `<span class="nc-eyebrow">Your night</span><h3>${long(dt)}</h3>${tag}
+        <p class="nc-note">We take a breather this night.${nx ? ` The lights are back on <b>${long(nx)}</b>.` : ''}</p>
+        ${nx ? `<button type="button" class="btn nc-btn ghost" data-go="${md(nx)}">See ${nx.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</button>` : ''}`;
+      const g = card.querySelector('[data-go]'); g && g.addEventListener('click', () => showNight(g.dataset.go, true));
+    }
+    if (focus) document.querySelector(`.cal .d[data-md="${mdKey}"]`)?.focus();
+  }
+  document.querySelectorAll('.cal').forEach(c => c.addEventListener('click', e => {
+    const b = e.target.closest('.d[data-md]'); if (!b) return;
+    showNight(b.dataset.md);
+    // on narrow screens the details card sits below the calendar: bring it into view
+    const r = card.getBoundingClientRect();
+    if (r.top > innerHeight - 120 || r.bottom < 80) card.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  }));
+  showNight(md(first));
 
   // ---- Nav ----
   const nav = document.getElementById('nav');
