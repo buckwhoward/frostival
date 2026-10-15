@@ -6,8 +6,10 @@
 <title>Contact Us | Frostival</title>
 <meta name="description" content="Questions about tickets, exchanges, VIP, groups or lost items at Frostival? Send us a message and our guest services team will get back to you.">
 <meta name="theme-color" content="#0B1626">
-<!-- Form delivery: Formspree form that forwards to info@frostivaltexas.com. Paste the form URL (https://formspree.io/f/xxxxxxx) here. -->
-<meta name="form-endpoint" content="https://formspree.io/f/mqpegqkg">
+<!-- Form delivery: Google Apps Script web app (emails info@frostivaltexas.com, logs to a Google Sheet). A Formspree URL also works here. -->
+<meta name="form-endpoint" content="https://script.google.com/macros/s/AKfycbywkyHFD1N8fnO4C3Ih9gb5K03ni8rW1ubozj539QrIoGqcOi1uuViSk0S2BYHiXCqjOQ/exec">
+<!-- Google reCAPTCHA v3 site key (public). The secret lives only in the Apps Script project. -->
+<meta name="recaptcha-site-key" content="6LdIIPAtAAAAAFNuWpH4R9hUdglKWm4FCn1jXJjy">
 <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,6 +67,9 @@
   .c-fine a{color:#5B5247}
   .form-err{background:#FFF1EE;border:1.5px solid #F4B9B4;color:#9E211B;border-radius:14px;padding:12px 14px;font-weight:600;font-size:.93rem;margin:0}
   .form-err[hidden]{display:none}
+  .grecaptcha-badge{visibility:hidden}
+  .c-captcha{font-size:.74rem;color:#9A8F82;margin:-4px 0 0}
+  .c-captcha a{color:#7A6F62}
   .hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
 
   .c-done{text-align:center;padding:clamp(24px,5vw,48px) 6px}
@@ -228,6 +233,7 @@
             <button class="btn" type="submit" id="sendBtn">Send message</button>
             <p class="c-fine">We'll only use your details to answer you. See our <a href="../privacy-policy/">Privacy Policy</a>.</p>
           </div>
+          <p class="c-captcha" id="captchaNote" hidden>This form is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
         </form>
 
         <div class="c-done" id="done" hidden tabindex="-1">
@@ -419,6 +425,24 @@
 
   // ---- send ----
   const endpoint = (document.querySelector('meta[name="form-endpoint"]') || {}).content || '';
+  const siteKey = (document.querySelector('meta[name="recaptcha-site-key"]') || {}).content || '';
+  let rcReady = null;
+  function loadCaptcha() {
+    if (!siteKey || rcReady) return rcReady;
+    rcReady = new Promise((res, rej) => {
+      const sc = document.createElement('script');
+      sc.src = 'https://www.google.com/recaptcha/api.js?render=' + encodeURIComponent(siteKey);
+      sc.async = true; sc.onload = () => grecaptcha.ready(res); sc.onerror = rej;
+      document.head.appendChild(sc);
+    });
+    return rcReady;
+  }
+  if (siteKey) { $('captchaNote').hidden = false; form.addEventListener('focusin', loadCaptcha, { once: true }); }
+  async function captchaToken() {
+    if (!siteKey) return '';
+    await loadCaptcha();
+    return grecaptcha.execute(siteKey, { action: 'contact' });
+  }
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!validate()) return;
@@ -436,11 +460,20 @@
       'Sent from': location.href
     };
     Object.keys(data).forEach(k => { if (data[k] === '') delete data[k]; });
+    data._gotcha = $('company_website').value;
     const btn = $('sendBtn'); btn.disabled = true; btn.textContent = 'Sending…';
     try {
       if (!endpoint) throw new Error('no-endpoint');
-      const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) });
-      if (!r.ok) throw new Error(r.status);
+      data._token = await captchaToken();
+      if (endpoint.includes('script.google.com')) {
+        // Apps Script: plain-text POST avoids a CORS preflight; the script answers with JSON
+        const r = await fetch(endpoint, { method: 'POST', body: JSON.stringify(data) });
+        const out = await r.json();
+        if (!out.ok) throw new Error(out.error || 'server');
+      } else {
+        const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) });
+        if (!r.ok) throw new Error(r.status);
+      }
       $('doneEmail').textContent = data.email;
       $('doneRef').textContent = current.label + (order ? ' · Order ' + order : '');
       form.hidden = true; $('done').hidden = false; $('done').focus();
@@ -450,7 +483,8 @@
       const body = Object.entries(data).filter(([k]) => !k.startsWith('_')).map(([k, val]) => `${k === 'email' ? 'Email' : k}: ${val}`).join('\n');
       const mailto = `mailto:info@frostivaltexas.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       const fe = $('formErr');
-      fe.innerHTML = `We couldn't send that just now. <a href="${mailto}" style="color:inherit">Email it to us instead</a> (we've filled it in for you) or try again in a minute.`;
+      const why = x.message === 'rate' ? 'You\'ve sent a few messages in a row, so we paused this one.' : x.message === 'captcha' ? 'Our spam check couldn\'t confirm this message.' : 'We couldn\'t send that just now.';
+      fe.innerHTML = `${why} <a href="${mailto}" style="color:inherit">Email it to us instead</a> (we've filled it in for you) or try again in a minute.`;
       fe.hidden = false;
     } finally { btn.disabled = false; btn.textContent = 'Send message'; }
   });
