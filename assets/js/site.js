@@ -4,9 +4,12 @@
 
   // ---- Season calendar (single source of truth for open nights + hours) ----
   const SEASON = { year: 2026, open: [['11-28', '11-29'], ['12-03', '12-06'], ['12-10', '12-27']] };
-  // Default hours for every open night; override a single night in HOURS_BY_DATE (e.g. '12-24': { last: '7:30 PM' })
-  const HOURS = { entry: '5:30 PM', last: '8:30 PM', vip: '5:30 – 8:30 PM' };
-  const HOURS_BY_DATE = {};
+  // Event hours by date range (MM-DD, inclusive). Entry slots run first–last; the farm stays open until close.
+  const HOURS = [
+    { from: '11-28', to: '12-10', open: '5:30 PM', firstSlot: '5:30 PM', lastSlot: '8:00 PM', close: '10:00 PM' },
+    { from: '12-11', to: '12-27', open: '5:30 PM', firstSlot: '5:30 PM', lastSlot: '8:30 PM', close: '10:30 PM' }
+  ];
+  const HOURS_BY_DATE = {}; // one-night overrides, e.g. '12-24': { close: '9:00 PM' }
   const d = (md) => new Date(`${SEASON.year}-${md}T12:00:00`);
   const ranges = SEASON.open.map(([a, b]) => [d(a), d(b)]);
   const first = ranges[0][0], last = ranges.at(-1)[1];
@@ -43,12 +46,13 @@
     if (!card) return;
     const dt = d(mdKey), open = isOpen(dt);
     document.querySelectorAll('.cal .d[data-md]').forEach(b => { const on = b.dataset.md === mdKey; b.classList.toggle('sel', on); b.setAttribute('aria-pressed', on); });
-    const h = Object.assign({}, HOURS, HOURS_BY_DATE[mdKey] || {});
+    const h = Object.assign({}, HOURS.find(r => mdKey >= r.from && mdKey <= r.to) || HOURS[0], HOURS_BY_DATE[mdKey] || {});
+    const t = x => x.replace(':00 PM', ' PM'), rng = (a, b) => t(a).replace(' PM', '') + ' – ' + t(b);
     const tag = +dt === +first ? '<span class="nc-tag gold">Opening night</span>' : +dt === +last ? '<span class="nc-tag">Final night</span>' : open ? '<span class="nc-tag">Open</span>' : '<span class="nc-tag shut">Closed</span>';
     if (open) {
       card.innerHTML = `<span class="nc-eyebrow">Your night</span><h3>${long(dt)}</h3>${tag}
-        <dl class="nc-hours"><div><dt>First entry</dt><dd>${h.entry}</dd></div><div><dt>Last entry</dt><dd>${h.last}</dd></div><div><dt>VIP arrival</dt><dd>Any time ${h.vip}</dd></div></dl>
-        <p class="nc-note">Pick your entry time when you book. Prices go up as nights fill, so earlier is better.</p>
+        <dl class="nc-hours"><div><dt>Open</dt><dd>${rng(h.open, h.close)}</dd></div><div><dt>Entry times</dt><dd>${rng(h.firstSlot, h.lastSlot)}</dd></div><div><dt>VIP arrival</dt><dd>Any time ${rng(h.firstSlot, h.lastSlot)}</dd></div></dl>
+        <p class="nc-note">Pick an entry time when you book, then stay until close. Prices go up as nights fill, so earlier is better.</p>
         <a class="btn nc-btn nc-join" href="#join">Join the list</a>`;
       const j = card.querySelector('.nc-join'); j && j.addEventListener('click', e => { e.preventDefault(); document.querySelector('.nav-cta[data-join]')?.click(); });
     } else {
