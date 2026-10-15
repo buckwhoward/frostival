@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PN6N7F82');</script>
+<!-- End Google Tag Manager -->
+
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Contact Us | Frostival</title>
 <meta name="description" content="Questions about tickets, exchanges, VIP, groups or lost items at Frostival? Send us a message and our guest services team will get back to you.">
@@ -101,6 +109,10 @@
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PN6N7F82"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <header class="nav" id="nav">
   <div class="wrap">
@@ -477,6 +489,7 @@
       }
       $('doneEmail').textContent = data.email;
       $('doneRef').textContent = current.label + (order ? ' · Order ' + order : '');
+      (window.dataLayer = window.dataLayer || []).push({ event: 'contact_submit', contact_topic: current.id, contact_topic_label: current.label });
       form.hidden = true; $('done').hidden = false; $('done').focus();
       window.scrollTo({ top: $('done').getBoundingClientRect().top + scrollY - 120, behavior: 'smooth' });
     } catch (x) {

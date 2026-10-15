@@ -182,7 +182,9 @@
         body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'Frostival website', profile: { data: { type: 'profile', attributes: attrs } } }, relationships: { list: { data: { type: 'list', id: KLAVIYO.listId } } } } })
       });
       if (!r.ok) throw new Error(r.status);
-      s1.hidden = true; s2.hidden = false; form.reset();
+      s1.hidden = true; s2.hidden = false;
+      (window.dataLayer = window.dataLayer || []).push({ event: 'sign_up', method: 'join_list', signup_source: source, sms_opt_in: sms });
+      form.reset();
     } catch (_) {
       err.textContent = "Something went wrong on our end. Please try again in a minute."; err.hidden = false;
     } finally { btn.disabled = false; btn.textContent = 'Join the list'; }
