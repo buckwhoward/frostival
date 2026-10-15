@@ -437,7 +437,7 @@
     });
     return rcReady;
   }
-  if (siteKey) { $('captchaNote').hidden = false; form.addEventListener('focusin', loadCaptcha, { once: true }); }
+  if (siteKey) { $('captchaNote').hidden = false; ['focusin', 'pointerdown', 'input', 'change'].forEach(ev => form.addEventListener(ev, loadCaptcha, { once: true })); }
   async function captchaToken() {
     if (!siteKey) return '';
     await loadCaptcha();
