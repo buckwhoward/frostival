@@ -18,27 +18,28 @@
   const md = (dt) => String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
   const long = (dt) => dt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
-  function renderMonth(el, month) {
+  // One continuous season calendar: Sunday of opening week through the end of December
+  function renderSeason(el) {
     if (!el) return;
-    const name = new Date(SEASON.year, month, 1).toLocaleString('en-US', { month: 'long' });
-    const startDow = new Date(SEASON.year, month, 1).getDay();
-    const days = new Date(SEASON.year, month + 1, 0).getDate();
+    const start = new Date(first); start.setDate(start.getDate() - start.getDay());
+    const end = new Date(SEASON.year, 11, 31, 12);
     let openCount = 0, cells = '';
     ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(x => cells += `<div class="dow" aria-hidden="true">${x}</div>`);
-    for (let i = 0; i < startDow; i++) cells += '<div></div>';
-    for (let n = 1; n <= days; n++) {
-      const dt = new Date(SEASON.year, month, n, 12);
+    for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+      const n = dt.getDate();
       const inSeason = dt >= first && dt <= last;
       const open = isOpen(dt);
       if (open) openCount++;
-      const cls = open ? `open${+dt === +first ? ' first' : ''}${md(dt) === SANTA_LAST ? ' santa-last' : ''}` : inSeason ? 'closed' : '';
-      if (inSeason) cells += `<button type="button" class="d ${cls}" data-md="${md(dt)}" aria-label="${long(dt)}, ${open ? 'open' : 'closed'}${md(dt) === SANTA_LAST ? ', Santa’s last night' : ''}" aria-pressed="false">${n}</button>`;
-      else cells += `<div class="d" aria-hidden="true">${n}</div>`;
+      const monthStart = +dt === +start || n === 1;
+      const mo = monthStart ? `<span class="mo">${dt.toLocaleString('en-US', { month: 'short' })}</span>` : '';
+      const cls = open ? `open${+dt === +first ? ' first' : ''}${md(dt) === SANTA_LAST ? ' santa-last' : ''}` : inSeason ? 'closed' : 'off';
+      if (inSeason) cells += `<button type="button" class="d ${cls}${monthStart ? ' has-mo' : ''}" data-md="${md(dt)}" aria-label="${long(dt)}, ${open ? 'open' : 'closed'}${md(dt) === SANTA_LAST ? ', Santa\u2019s last night' : ''}" aria-pressed="false">${mo}<span class="n">${n}</span></button>`;
+      else cells += `<div class="d off${monthStart ? ' has-mo' : ''}" aria-hidden="true">${mo}<span class="n">${n}</span></div>`;
     }
-    el.innerHTML = `<h3>${name} <small>${openCount} nights open</small></h3><div class="cal" role="group" aria-label="${name} ${SEASON.year}">${cells}</div>`;
+    const fmt = x => x.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    el.innerHTML = `<h3>${fmt(first)} \u2013 ${fmt(last)} <small>${openCount} nights open</small></h3><div class="cal" role="group" aria-label="${SEASON.year} season calendar">${cells}</div>`;
   }
-  renderMonth(document.getElementById('cal-nov'), 10);
-  renderMonth(document.getElementById('cal-dec'), 11);
+  renderSeason(document.getElementById('cal-season'));
 
   // ---- Night details: click a day to see hours ----
   const card = document.getElementById('nightCard');
