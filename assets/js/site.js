@@ -52,6 +52,7 @@
     if (open) {
       card.innerHTML = `<span class="nc-eyebrow">Your night</span><h3>${long(dt)}</h3>${tag}
         <dl class="nc-hours"><div><dt>Open</dt><dd>${rng(h.open, h.close)}</dd></div><div><dt>Entry times</dt><dd>${rng(h.firstSlot, h.lastSlot)}</dd></div><div><dt>VIP arrival</dt><dd>Any time ${rng(h.firstSlot, h.lastSlot)}</dd></div></dl>
+        ${mdKey > '12-24' ? '<p class="nc-santa">Santa has already left for the North Pole (he leaves Dec 24), but everything else is on.</p>' : ''}
         <p class="nc-note">Pick an entry time when you book, then stay until close. Prices go up as nights fill, so earlier is better.</p>
         <a class="btn nc-btn nc-join" href="#join">Join the list</a>`;
       const j = card.querySelector('.nc-join'); j && j.addEventListener('click', e => { e.preventDefault(); document.querySelector('.nav-cta[data-join]')?.click(); });
