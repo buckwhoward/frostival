@@ -10,6 +10,7 @@
     { from: '12-11', to: '12-27', open: '5:30 PM', firstSlot: '5:30 PM', lastSlot: '8:30 PM', close: '10:30 PM' }
   ];
   const HOURS_BY_DATE = {}; // one-night overrides, e.g. '12-24': { close: '9:00 PM' }
+  const SANTA_LAST = '12-24'; // Santa's last night
   const d = (md) => new Date(`${SEASON.year}-${md}T12:00:00`);
   const ranges = SEASON.open.map(([a, b]) => [d(a), d(b)]);
   const first = ranges[0][0], last = ranges.at(-1)[1];
@@ -30,8 +31,8 @@
       const inSeason = dt >= first && dt <= last;
       const open = isOpen(dt);
       if (open) openCount++;
-      const cls = open ? `open${+dt === +first ? ' first' : ''}` : inSeason ? 'closed' : '';
-      if (inSeason) cells += `<button type="button" class="d ${cls}" data-md="${md(dt)}" aria-label="${long(dt)}, ${open ? 'open' : 'closed'}" aria-pressed="false">${n}</button>`;
+      const cls = open ? `open${+dt === +first ? ' first' : ''}${md(dt) === SANTA_LAST ? ' santa-last' : ''}` : inSeason ? 'closed' : '';
+      if (inSeason) cells += `<button type="button" class="d ${cls}" data-md="${md(dt)}" aria-label="${long(dt)}, ${open ? 'open' : 'closed'}${md(dt) === SANTA_LAST ? ', Santa’s last night' : ''}" aria-pressed="false">${n}</button>`;
       else cells += `<div class="d" aria-hidden="true">${n}</div>`;
     }
     el.innerHTML = `<h3>${name} <small>${openCount} nights open</small></h3><div class="cal" role="group" aria-label="${name} ${SEASON.year}">${cells}</div>`;
@@ -48,11 +49,11 @@
     document.querySelectorAll('.cal .d[data-md]').forEach(b => { const on = b.dataset.md === mdKey; b.classList.toggle('sel', on); b.setAttribute('aria-pressed', on); });
     const h = Object.assign({}, HOURS.find(r => mdKey >= r.from && mdKey <= r.to) || HOURS[0], HOURS_BY_DATE[mdKey] || {});
     const t = x => x.replace(':00 PM', ' PM'), rng = (a, b) => t(a).replace(' PM', '') + ' – ' + t(b);
-    const tag = +dt === +first ? '<span class="nc-tag gold">Opening night</span>' : +dt === +last ? '<span class="nc-tag">Final night</span>' : open ? '<span class="nc-tag">Open</span>' : '<span class="nc-tag shut">Closed</span>';
+    const tag = mdKey === SANTA_LAST ? '<span class="nc-tag santa">Last night with Santa</span>' : +dt === +first ? '<span class="nc-tag gold">Opening night</span>' : +dt === +last ? '<span class="nc-tag">Final night</span>' : open ? '<span class="nc-tag">Open</span>' : '<span class="nc-tag shut">Closed</span>';
     if (open) {
       card.innerHTML = `<span class="nc-eyebrow">Your night</span><h3>${long(dt)}</h3>${tag}
         <dl class="nc-hours"><div><dt>Open</dt><dd>${rng(h.open, h.close)}</dd></div><div><dt>Entry times</dt><dd>${rng(h.firstSlot, h.lastSlot)}</dd></div><div><dt>VIP arrival</dt><dd>Any time ${rng(h.firstSlot, h.lastSlot)}</dd></div></dl>
-        ${mdKey > '12-24' ? '<p class="nc-santa">Santa has already left for the North Pole (he leaves Dec 24), but everything else is on.</p>' : ''}
+        ${mdKey > '12-24' ? '<p class="nc-santa">Santa’s last night was Dec 24, but everything else is on.</p>' : ''}
         <p class="nc-note">Pick an entry time when you book, then stay until close. Prices go up as nights fill, so earlier is better.</p>
         <a class="btn nc-btn nc-join" href="#join">Join the list</a>`;
       const j = card.querySelector('.nc-join'); j && j.addEventListener('click', e => { e.preventDefault(); document.querySelector('.nav-cta[data-join]')?.click(); });

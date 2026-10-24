@@ -115,7 +115,7 @@ section{position:relative}
 .night-card{border-radius:var(--radius);background:#fff;flex:1;padding:22px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 var(--cream-2), 0 20px 40px -30px rgba(80,40,0,.35)}
 .nc-eyebrow{font-weight:700;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
 .night-card h3{font-size:1.7rem;line-height:1.05;margin:0}
-.nc-tag{align-self:flex-start;font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.4em .8em;border-radius:999px;background:var(--frost-deep);color:#fff}
+.nc-tag{align-self:flex-start;white-space:nowrap;font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.4em .8em;border-radius:999px;background:var(--frost-deep);color:#fff}
 .nc-tag.gold{background:var(--gold);color:var(--ink)}
 .nc-tag.shut{background:#F3E8D6;color:#8A7F72}
 .nc-hours{margin:4px 0 0;display:grid;gap:0}
@@ -334,3 +334,6 @@ footer{padding:80px 0 40px;border-top:1px solid rgba(255,255,255,.08);margin-top
 .santa-note{display:flex;gap:10px;align-items:flex-start;margin:-6px 0 24px;padding:12px 16px;border-radius:14px;background:rgba(91,200,245,.12);border:1px solid rgba(91,200,245,.3);color:var(--cream);font-weight:600;font-size:.95rem;line-height:1.45}
 .santa-note svg{width:20px;height:20px;flex:none;color:var(--frost);margin-top:1px}
 .nc-santa{margin:0;font-size:.85rem;color:#1E3A52;background:#EEF7FD;border-radius:10px;padding:8px 10px;line-height:1.4}
+.cal .d.santa-last::after{content:"";position:absolute;top:5px;right:5px;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px #fff}
+.legend .santa-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px #fff,0 0 0 3px #E5D8C2;margin-left:2px;vertical-align:-1px}
+.nc-tag.santa{background:var(--red);color:#fff}
