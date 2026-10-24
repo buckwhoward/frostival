@@ -342,3 +342,16 @@ footer{padding:80px 0 40px;border-top:1px solid rgba(255,255,255,.08);margin-top
 .cal .d.off{color:#CFC5B5;background:transparent}
 .cal .d .mo{position:absolute;top:5px;left:7px;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;line-height:1;opacity:.9}
 .cal .d.off .mo{color:#9A8E7F}
+/* on-sale countdown */
+.countdown{display:inline-flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:22px;padding:12px 14px 12px 18px;border-radius:18px;background:rgba(11,22,38,.62);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.cd-label{font-weight:800;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);line-height:1.35;white-space:nowrap}
+.cd-units{display:flex;gap:8px}
+.cd-unit{min-width:58px;padding:8px 6px 6px;border-radius:12px;background:rgba(255,255,255,.08);text-align:center}
+.cd-unit b{display:block;font-family:var(--display);font-weight:800;font-size:1.9rem;line-height:1;color:var(--cream);font-variant-numeric:tabular-nums}
+.cd-unit span{display:block;margin-top:3px;font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.countdown.live{gap:14px}
+.countdown.live .cd-label{max-width:none;font-size:.9rem}
+.countdown.cd-light{background:#fff;border:1.5px solid var(--cream-2);box-shadow:0 20px 40px -30px rgba(80,40,0,.35);backdrop-filter:none;margin:18px auto 0}
+.countdown.cd-light .cd-label{color:var(--red)}
+.countdown.cd-light .cd-unit{background:var(--night)}
+@media (max-width:520px){.countdown{width:100%;justify-content:center}.cd-label{max-width:none;text-align:center;width:100%}.cd-unit{min-width:0;flex:1}.cd-units{width:100%}.cd-unit b{font-size:1.6rem}}

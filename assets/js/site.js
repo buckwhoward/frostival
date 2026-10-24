@@ -208,3 +208,31 @@
     btn.replaceWith(f);
   });
 })();
+
+// ---- On-sale countdown ----
+(() => {
+  // Tickets go on sale Thursday, Nov 5, 2026 at 10:00 AM Central (CST, UTC−6)
+  const ONSALE = new Date('2026-11-05T10:00:00-06:00');
+  const TICKET_URL = ''; // set to the ticketing link once it's live; until then the button opens the join form
+  const LABEL = 'Tickets on sale<br>Thu, Nov 5 \u00b7 10\u00a0AM';
+  const els = [...document.querySelectorAll('[data-countdown]')];
+  if (!els.length) return;
+  const pad = n => String(n).padStart(2, '0');
+  const unit = (v, l) => `<div class="cd-unit"><b>${v}</b><span>${l}</span></div>`;
+  let timer;
+  function render() {
+    const ms = ONSALE - Date.now();
+    if (ms <= 0) {
+      els.forEach(el => {
+        el.classList.add('live');
+        el.innerHTML = `<span class="cd-label">Tickets are on sale now</span><a class="btn gold cd-btn" href="${TICKET_URL || '#join'}"${TICKET_URL ? '' : ' data-join-cd'}>Get tickets</a>`;
+        const b = el.querySelector('[data-join-cd]'); b && b.addEventListener('click', e => { e.preventDefault(); document.querySelector('.nav-cta[data-join]')?.click(); });
+      });
+      clearInterval(timer); return;
+    }
+    const s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+    const html = `<span class="cd-label">${LABEL}</span><div class="cd-units" role="timer" aria-label="${d} days, ${h} hours, ${m} minutes until tickets go on sale">${unit(d, d === 1 ? 'day' : 'days')}${unit(pad(h), 'hrs')}${unit(pad(m), 'min')}${unit(pad(sec), 'sec')}</div>`;
+    els.forEach(el => { el.innerHTML = html; });
+  }
+  render(); timer = setInterval(render, 1000);
+})();
