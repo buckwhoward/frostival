@@ -355,3 +355,5 @@ footer{padding:80px 0 40px;border-top:1px solid rgba(255,255,255,.08);margin-top
 .countdown.cd-light .cd-label{color:var(--red)}
 .countdown.cd-light .cd-unit{background:var(--night)}
 @media (max-width:520px){.countdown{width:100%;justify-content:center}.cd-label{max-width:none;text-align:center;width:100%}.cd-unit{min-width:0;flex:1}.cd-units{width:100%}.cd-unit b{font-size:1.6rem}}
+.price .amt sup.c{margin-left:1px}
+.price-foot{text-align:center;font-size:.88rem;opacity:.8;margin-top:22px}
