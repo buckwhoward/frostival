@@ -211,10 +211,10 @@
 
 // ---- On-sale countdown ----
 (() => {
-  // Tickets go on sale Thursday, Nov 5, 2026 at 10:00 AM Central (CST, UTC−6)
-  const ONSALE = new Date('2026-11-05T10:00:00-06:00');
+  // Tickets go on sale Thursday, Nov 5, 2026 at 6:00 PM Central (CST, UTC−6)
+  const ONSALE = new Date('2026-11-05T18:00:00-06:00');
   const TICKET_URL = ''; // set to the ticketing link once it's live; until then the button opens the join form
-  const LABEL = 'Tickets on sale<br>Thu, Nov 5 \u00b7 10\u00a0AM';
+  const LABEL = 'Tickets on sale<br>Thu, Nov 5 \u00b7 6\u00a0PM';
   const els = [...document.querySelectorAll('[data-countdown]')];
   if (!els.length) return;
   const pad = n => String(n).padStart(2, '0');
