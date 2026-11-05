@@ -18,13 +18,13 @@
   const md = (dt) => String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
   const long = (dt) => dt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
-  // One continuous season calendar: Sunday of opening week through the end of December
+  // One continuous season calendar (Monday-first, like the ticketing calendar): Monday of opening week through the end of December
   function renderSeason(el) {
     if (!el) return;
-    const start = new Date(first); start.setDate(start.getDate() - start.getDay());
+    const start = new Date(first); start.setDate(start.getDate() - (start.getDay() + 6) % 7);
     const end = new Date(SEASON.year, 11, 31, 12);
     let openCount = 0, cells = '';
-    ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(x => cells += `<div class="dow" aria-hidden="true">${x}</div>`);
+    ['M', 'T', 'W', 'T', 'F', 'S', 'S'].forEach(x => cells += `<div class="dow" aria-hidden="true">${x}</div>`);
     for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
       const n = dt.getDate();
       const inSeason = dt >= first && dt <= last;
