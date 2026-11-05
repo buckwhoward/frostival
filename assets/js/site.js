@@ -181,7 +181,7 @@
     if (sms) attrs.subscriptions.sms = { marketing: { consent: 'SUBSCRIBED' } }; // only when the unchecked-by-default box is ticked
     try {
       const r = await fetch(`https://a.klaviyo.com/client/subscriptions/?company_id=${KLAVIYO.companyId}`, {
-        method: 'POST', headers: { 'content-type': 'application/vnd.api+json', revision: '2024-10-15' },
+        method: 'POST', headers: { 'content-type': 'application/vnd.api+json', revision: '2025-07-15' },
         body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'Frostival website', profile: { data: { type: 'profile', attributes: attrs } } }, relationships: { list: { data: { type: 'list', id: KLAVIYO.listId } } } } })
       });
       if (!r.ok) throw new Error(r.status);
