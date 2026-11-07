@@ -13,7 +13,7 @@
   --wrap:min(1200px, calc(100% - 32px));
 }
 *{box-sizing:border-box}
-html{overflow-x:clip;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{overflow-x:clip;scroll-padding-top:110px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--night);color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:clip}
 img,video{display:block;max-width:100%}
 a{color:inherit}
@@ -42,6 +42,16 @@ h3{font-size:1.5rem;line-height:1.05}
 .nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .25s, box-shadow .25s, padding .25s;padding:18px 0}
 .nav::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(11,22,38,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(255,255,255,.08);opacity:0;transition:opacity .25s}
 .nav.scrolled{padding:10px 0}
+/* tickets-on-sale bar, fixed above the nav */
+.sale-bar{position:fixed;inset:0 0 auto;z-index:51;height:var(--bar-h);display:flex;align-items:center;justify-content:center;gap:.6em;padding:0 16px;background:var(--red);color:#fff;text-decoration:none;font-size:.92rem;font-weight:600;white-space:nowrap}
+.sale-bar strong{font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:.85rem}
+.sale-bar .sb-go{margin-left:.4em;padding:.25em .8em;border-radius:999px;background:#fff;color:var(--red);font-weight:800;font-size:.82rem;transition:transform .15s}
+.sale-bar:hover .sb-go{transform:translateX(2px)}
+body.has-bar{--bar-h:40px}
+body.has-bar .nav{top:var(--bar-h)}
+body.has-bar .hero{padding-top:calc(140px + var(--bar-h))}
+@media (max-width:520px){.sale-bar .sb-dates{display:none}}
+@media (max-width:900px){body.has-bar .hero-badge{top:calc(96px + var(--bar-h))}}
 .nav.scrolled::before{opacity:1}
 .nav .wrap{display:flex;align-items:center;gap:24px}
 .nav .logo img{height:54px;width:auto;transition:height .25s}
