@@ -56,8 +56,7 @@
         <dl class="nc-hours"><div><dt>Open</dt><dd>${rng(h.open, h.close)}</dd></div><div><dt>Entry times</dt><dd>${rng(h.firstSlot, h.lastSlot)}</dd></div><div><dt>VIP arrival</dt><dd>Any time ${rng(h.firstSlot, h.lastSlot)}</dd></div></dl>
         ${mdKey > '12-24' ? '<p class="nc-santa">Santa’s last night was Dec 24, but everything else is on.</p>' : ''}
         <p class="nc-note">Pick an entry time when you book, then stay until close. Prices go up as nights fill, so earlier is better.</p>
-        <a class="btn nc-btn nc-join" href="#join">Join the list</a>`;
-      const j = card.querySelector('.nc-join'); j && j.addEventListener('click', e => { e.preventDefault(); document.querySelector('.nav-cta[data-join]')?.click(); });
+        <a class="btn nc-btn" href="https://tix.frostivaltexas.com/">Get tickets</a>`;
     } else {
       const nx = nextOpen(dt);
       card.innerHTML = `<span class="nc-eyebrow">Your night</span><h3>${long(dt)}</h3>${tag}
@@ -213,7 +212,7 @@
 (() => {
   // Tickets go on sale Thursday, Nov 5, 2026 at 6:00 PM Central (CST, UTC−6)
   const ONSALE = new Date('2026-11-05T18:00:00-06:00');
-  const TICKET_URL = ''; // set to the ticketing link once it's live; until then the button opens the join form
+  const TICKET_URL = 'https://tix.frostivaltexas.com/';
   const LABEL = 'Tickets on sale<br>Thu, Nov 5 \u00b7 6\u00a0PM';
   const els = [...document.querySelectorAll('[data-countdown]')];
   if (!els.length) return;
