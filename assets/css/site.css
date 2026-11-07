@@ -43,9 +43,9 @@ h3{font-size:1.5rem;line-height:1.05}
 .nav::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(11,22,38,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(255,255,255,.08);opacity:0;transition:opacity .25s}
 .nav.scrolled{padding:10px 0}
 /* tickets-on-sale bar, fixed above the nav */
-.sale-bar{position:fixed;inset:0 0 auto;z-index:51;height:var(--bar-h);display:flex;align-items:center;justify-content:center;gap:.6em;padding:0 16px;background:var(--red);color:#fff;text-decoration:none;font-size:.92rem;font-weight:600;white-space:nowrap}
+.sale-bar{position:fixed;inset:0 0 auto;z-index:51;height:var(--bar-h);display:flex;align-items:center;justify-content:center;gap:.6em;padding:0 16px;background:var(--frost-deep);color:#fff;text-decoration:none;font-size:.92rem;font-weight:600;white-space:nowrap}
 .sale-bar strong{font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:.85rem}
-.sale-bar .sb-go{margin-left:.4em;padding:.25em .8em;border-radius:999px;background:#fff;color:var(--red);font-weight:800;font-size:.82rem;transition:transform .15s}
+.sale-bar .sb-go{margin-left:.4em;padding:.25em .8em;border-radius:999px;background:#fff;color:var(--frost-deep);font-weight:800;font-size:.82rem;transition:transform .15s}
 .sale-bar:hover .sb-go{transform:translateX(2px)}
 body.has-bar{--bar-h:40px}
 body.has-bar .nav{top:var(--bar-h)}
